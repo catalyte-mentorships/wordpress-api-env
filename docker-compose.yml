@@ -1,5 +1,6 @@
 version: '3'
 # For local development only
+# Note saving for later this kinda worked but not that well with all of the PORT issues and git cloning 
 services:
   db:
     image: mysql:5.7
