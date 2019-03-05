@@ -58,19 +58,26 @@ RUN curl -o /bin/wp-cli.phar https://raw.githubusercontent.com/wp-cli/builds/gh-
 RUN chmod +x /bin/wp-cli.phar
 RUN cd /bin && mv wp-cli.phar wp
 
+## expose these ports on the docker virtual network
+EXPOSE ${APP_PORT} 80 443 3306
+
 ## Restart the sever for php modules to be configured
-RUN service apache2 restart
-##
+RUN service apache2 start
+
 #RUN cd /var/www/html \
 #    && composer create-project roots/bedrock ./
 
-RUN cd /var/www/html \
-    && git clone https://github.com/catalyte-mentorships/wordpress-api.git ./
+# This doesn't seem to want to clone so I went into the container and created the project from there.
+#RUN cd /var/www/html \
+#    && rm index.html \
+#    && git clone https://github.com/catalyte-mentorships/wordpress-api.git .
+
+#ENV APP_DEV_FOLDER ./src
+#VOLUME ["${APP_DEV_FOLDER}:/var/www/html"]
+
+#RUN service apache2 start
 
 RUN rm -rf /var/lib/apt/lists/*
-
-## expose these ports on the docker virtual network
-EXPOSE ${APP_PORT} 80
 
 # Keep the container running
 CMD ["tail", "-f", "/dev/null"]
