@@ -1,0 +1,4 @@
+- name: Remove theme source files
+  file:
+    state: absent
+    path: "{{ deploy_helper.new_release_path }}/web/app/themes/wordpress-api-theme/resources/assets"
